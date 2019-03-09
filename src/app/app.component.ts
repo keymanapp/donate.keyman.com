@@ -29,7 +29,7 @@ export class AppComponent {
 
   constructor(private http: HttpClient) {
     const self = this;
-    let stripe_key = '***FIX_THIS***';
+    let stripe_key = 'pk_test';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
       stripe_key = (<any>window).app_data.stripe_key;
@@ -49,7 +49,7 @@ export class AppComponent {
           'currency': self.model.currency,
           'data': tokenData,
         };
-        const apiURL = 'http://localhost:8080/api/pay/stripe';
+        const apiURL = 'http://localhost:4567/charge';
         // const apiURL = 'https://donate.keyman.com/api/pay/stripe';
         self.http.post(apiURL, postData, {
           headers: new HttpHeaders().set('Content-Type', 'application/json'),
