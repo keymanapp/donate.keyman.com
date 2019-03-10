@@ -18,8 +18,6 @@ app.use(function(req, res, next) {
 // Home
 app.get("/", (req, res) =>
   res.render("index.pug", {keyPublishable}));
-// Set up charge endpoint for angular form
-// Todo: Parse data from angular form, send to Stripe
 app.post("/charge", (req, res) => {
   let amount = 500;
 
@@ -36,12 +34,25 @@ app.post("/charge", (req, res) => {
     }))
   .then(charge => res.render("charge.pug"));
 });
-
+// Set up post endpoint for angular form
 app.post("/charge/angular", (req, res) => {
-  console.log('hey matt');
   console.log (req.body);
   res.send('Saw that POST!');
-
+// Create customer first
+  stripe.customers.create({
+     email: req.body.token.email,
+    source: req.body.token.id
+  })
+// Add charge to customer
+  .then(customer =>
+    stripe.charges.create({
+      amount: req.body.amount,
+      currency: req.body.currency,
+      description: 'Example charge',
+      customer: customer.id
+    }))
+//Todo: Set up success/fail message
+   // .then(charge => res.render("charge.pug"));
 });
 // Listen on Port
 app.listen(4567);

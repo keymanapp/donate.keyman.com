@@ -57,8 +57,8 @@ export class AppComponent {
           data => {
             console.log(data.status, data.body);
             self.model.phase = 'final';
-            if (data.status === 200) {
-              self.model.resultCode = 200;
+            if (data.status === 201) {
+              self.model.resultCode = 201;
               self.model.result = 'success';
             } else {
               // self.model.phase = 'final';
