@@ -29,7 +29,7 @@ export class AppComponent {
 
   constructor(private http: HttpClient) {
     const self = this;
-    let stripe_key = 'pk_test_raF8g0kIcx1D8FlIAyxYMRed';
+    let stripe_key = 'pk_test';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
       stripe_key = (<any>window).app_data.stripe_key;

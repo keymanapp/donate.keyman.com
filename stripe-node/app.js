@@ -1,22 +1,22 @@
 // API with basic form
 // Set local environment variables
-const keyPublishable = 'pk_test_raF8g0kIcx1D8FlIAyxYMRed';
-const keySecret = 'sk_test_xd0rGDIVROhzmczhFF3avj2O';
+const keyPublishable = process.env.pk_test;
+const keySecret = process.env.sk_test;
 // Set up express
-const app = require("express")();
-const routes = require('./routes/routes');
-const stripe = require("stripe")(keySecret);
+const app = require('express')();
+const stripe = require('stripe')(keySecret);
 const bodyParser = require('body-parser');
+const routes = require('./routes/routes');
 // Set routes
 app.use('/', routes);
 // Parse requests
 app.use(bodyParser.json());
 // Allow requests
 // Todo: Cleanup
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
 });
 // // Todo: Error handling
 // app.use( function(req, res, next) {
@@ -33,23 +33,22 @@ app.use(function(req, res, next) {
 //     });
 // });
 // Set up post endpoint for angular form
-app.post("/charge/angular", (req, res) => {
+app.post('/charge/angular', (req, res) => {
   // Output event
   res.send('Saw that POST!');
-// Create customer first
+  // Create customer first
   stripe.customers.create({
-     email: req.body.token.email,
-    source: req.body.token.id
+    email: req.body.token.email,
+    source: req.body.token.id,
   })
-// Add charge to customer
-  .then(customer =>
-    stripe.charges.create({
+  // Add charge to customer
+    .then(customer => stripe.charges.create({
       amount: req.body.amount,
       currency: req.body.currency,
       description: 'Donation to Keyman',
       customer: customer.id,
-      receipt_email: req.body.token.email
-    }))
+      receipt_email: req.body.token.email,
+    }));
 // Successfull api call
   // .then(res => {
   //   res.status(200)
@@ -58,7 +57,7 @@ app.post("/charge/angular", (req, res) => {
   //       message: res,
   //     });
   // })
- // Handle api failure
+  // Handle api failure
   // .catch(res => {
   //   res.status(500)
   //      .json({
@@ -68,6 +67,6 @@ app.post("/charge/angular", (req, res) => {
   // })
 });
 // Listen on port 4567
-app.listen(process.env.PORT || 4567, function() {
+app.listen(process.env.PORT || 4567, () => {
   console.log('Running on port 4567');
 });
