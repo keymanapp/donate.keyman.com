@@ -29,7 +29,7 @@ export class AppComponent {
 
   constructor(private http: HttpClient) {
     const self = this;
-    let stripe_key = '***FIX_THIS***';
+    let stripe_key = 'pk_test';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
       stripe_key = (<any>window).app_data.stripe_key;
@@ -40,7 +40,7 @@ export class AppComponent {
       image: 'https://keyman.com/cdn/dev/img/icon1.png',
       locale: 'auto',
       token: function(token, tokenData) {
-        // console.log('got token', token, 'data ', tokenData);
+        console.log('got token', token, 'data ', tokenData);
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use.
         const postData = {
@@ -49,37 +49,36 @@ export class AppComponent {
           'currency': self.model.currency,
           'data': tokenData,
         };
-        const apiURL = 'http://localhost:8080/api/pay/stripe';
-        // const apiURL = 'https://donate.keyman.com/api/pay/stripe';
+        const apiURL = 'http://localhost:4567/charge/angular';
         self.http.post(apiURL, postData, {
-          headers: new HttpHeaders().set('Content-Type', 'application/json'),
+          // headers: new HttpHeaders().set('Content-Type', 'application/json'),
           observe: 'response', // TODO How do we catch 4xx errors?
         }).subscribe(
           data => {
-            // console.log(data.status, data.body);
+            console.log(data.status, data.body);
             self.model.phase = 'final';
             if (data.status === 201) {
               self.model.resultCode = 201;
               self.model.result = 'success';
             } else {
-              self.model.phase = 'final';
-              self.model.result = 'fail';
-              self.model.resultCode = data.status;
+              // self.model.phase = 'final';
+              // self.model.result = 'fail';
+              // self.model.resultCode = data.status;
               // var errorInfo = data.body;
               // self.model.resultMessage = <any>errorInfo.message;
                   // self.model.resultMessage =
             }
-          },
-          error => {
-            self.model.phase = 'final';
-            self.model.result = 'fail';
-            self.model.resultCode = error.status;
-
-            const errorInfo = JSON.parse(error.error);
-            self.model.resultMessage = errorInfo.message;
-
-            console.log(errorInfo);
           }
+          // error => {
+          //   self.model.phase = 'final';
+          //   self.model.result = 'fail';
+          //   self.model.resultCode = error.status;
+          //
+          //   const errorInfo = JSON.parse(error.error);
+          //   self.model.resultMessage = errorInfo.message;
+          //
+          //   console.log(errorInfo);
+          // }
         );
       }
     });
@@ -129,76 +128,77 @@ export class AppComponent {
     return 2000;
   }
 
-  clickTest() {
-    // this.phase = this.phase == 'donate' ? 'final' : 'donate';
-    // this.result = 'fail';
-    const self = this;
-    const token = {
-      'card': {
-          'address_city': null,
-          'address_country': null,
-          'address_line1': null,
-          'address_line1_check': null,
-          'address_line2': null,
-          'address_state': null,
-          'address_zip': null,
-          'address_zip_check': null,
-          'brand': 'Visa',
-          'country': 'US',
-          'cvc_check': 'pass',
-          'dynamic_last4': null,
-          'exp_month': 12,
-          'exp_year': 2018,
-          'funding': 'credit',
-          'id': 'card_1BG3HgEPhVx1rk67aBaUHrbN',
-          'last4': '4242',
-          'metadata': {},
-          'name': 'test_20_one@example.com',
-          'object': 'card',
-          'tokenization_method': null
-      },
-      'client_ip': '171.4.234.41',
-      'created': 1508754952,
-      'email': 'test_20_one@example.com',
-      'id': 'tok_1BG3HgEPhVx1rk67roclsirn',
-      'livemode': false,
-      'object': 'token',
-      'type': 'card',
-      'used': false
-    };
-    const postData = {
-      'token': token,
-      'amount': self.amountForCard(),
-      'currency': self.model.currency,
-      'data': {},
-    };
-    self.http.post('http://localhost:8080/api/pay/stripe', postData, {
-      headers: new HttpHeaders().set('Content-Type', 'application/json'),
-      observe: 'response', // TODO How do we catch 4xx errors?
-    }).subscribe(
-      data => {
-        // TODO On fail also display 'what we know' about the error.
-        console.log(data.status, data.body);
-        self.model.phase = 'final';
-        if (data.status === 201) {
-          self.model.result = 'success';
-        } else {
-          self.model.result = 'fail';
-        }
-      },
-      error => {
-        self.model.phase = 'final';
-        self.model.result = 'fail';
-        self.model.resultCode = error.status;
-
-        const errorInfo = JSON.parse(error.error);
-        self.model.resultMessage = errorInfo.message;
-
-        console.log(errorInfo);
-      }
-    );
-    return false;
-  }
+  // clickTest() {
+  //   // this.phase = this.phase == 'donate' ? 'final' : 'donate';
+  //   // this.result = 'fail';
+  //   const self = this;
+  //   const token = {
+  //     'card': {
+  //         'address_city': null,
+  //         'address_country': null,
+  //         'address_line1': null,
+  //         'address_line1_check': null,
+  //         'address_line2': null,
+  //         'address_state': null,
+  //         'address_zip': null,
+  //         'address_zip_check': null,
+  //         'brand': 'Visa',
+  //         'country': 'US',
+  //         'cvc_check': 'pass',
+  //         'dynamic_last4': null,
+  //         'exp_month': 12,
+  //         'exp_year': 2018,
+  //         'funding': 'credit',
+  //         'id': 'card_1BG3HgEPhVx1rk67aBaUHrbN',
+  //         'last4': '4242',
+  //         'metadata': {},
+  //         'name': 'test_20_one@example.com',
+  //         'object': 'card',
+  //         'tokenization_method': null
+  //     },
+  //     'client_ip': '171.4.234.41',
+  //     'created': 1508754952,
+  //     'email': 'test_20_one@example.com',
+  //     'id': 'tok_1BG3HgEPhVx1rk67roclsirn',
+  //     'livemode': false,
+  //     'object': 'token',
+  //     'type': 'card',
+  //     'used': false
+  //   };
+  //   const postData = {
+  //     'token': token,
+  //     'amount': self.amountForCard(),
+  //     'currency': self.model.currency,
+  //     'data': {},
+  //   };
+  //   self.http.post('http://localhost:4567/charge/angular', postData, {
+  //     headers: new HttpHeaders().set('Content-Type', 'application/json'),
+  //     observe: 'response', // TODO How do we catch 4xx errors?
+  //   }).subscribe(
+  //     data => {
+  //       console.log('Posting data from angular');
+  //       // TODO On fail also display 'what we know' about the error.
+  //       console.log(data.status, data.body);
+  //       self.model.phase = 'final';
+  //       if (data.status === 201) {
+  //         self.model.result = 'success';
+  //       } else {
+  //         self.model.result = 'fail';
+  //       }
+  //     },
+  //     error => {
+  //       self.model.phase = 'final';
+  //       self.model.result = 'fail';
+  //       self.model.resultCode = error.status;
+  //
+  //       const errorInfo = JSON.parse(error.error);
+  //       self.model.resultMessage = errorInfo.message;
+  //
+  //       console.log(errorInfo);
+  //     }
+  //   );
+  //   return false;
+  // }
 
   clickRetry() {
     this.model.reset();
