@@ -12,6 +12,7 @@ app.use('/', routes);
 // Parse requests
 app.use(bodyParser.json());
 // Allow requests
+// Todo: Cleanup
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
