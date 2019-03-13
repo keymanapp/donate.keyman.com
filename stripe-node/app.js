@@ -1,6 +1,5 @@
 // API with basic form
 // Set local environment variables
-const keyPublishable = process.env.pk_test;
 const keySecret = process.env.sk_test;
 // Set up express
 const app = require('express')();
