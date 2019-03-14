@@ -39,6 +39,7 @@ export class AppComponent {
       key: stripe_key,
       image: 'https://keyman.com/cdn/dev/img/icon1.png',
       locale: 'auto',
+      billingAddress: true,
       token: function(token, tokenData) {
         console.log('got token', token, 'data ', tokenData);
         // You can access the token ID with `token.id`.
