@@ -36,22 +36,22 @@ app.post('/charge/angular', (req, res) => {
   // Output event
   res.send('Saw that POST!');
   // Create address object
-  address_to = {
-    "address": {
-      "line1": req.body.data.billing_address_line1,
-      "city": req.body.data.billing_address_city,
-      "state": req.body.data.billing_address_state,
-      "postal_code": req.body.data.billing_address_zip,
-      "country": req.body.data.billing_address_country,
+  const address = {
+    address: {
+      line1: req.body.data.billing_address_line1,
+      city: req.body.data.billing_address_city,
+      state: req.body.data.billing_address_state,
+      postal_code: req.body.data.billing_address_zip,
+      country: req.body.data.billing_address_country,
     },
-    "name": null
-    }
+    name: null,
+  };
   // Create customer first
   stripe.customers.create({
     email: req.body.token.email,
     source: req.body.token.id,
-    shipping: address_to,
-    name: req.body.token.name
+    shipping: address,
+    name: req.body.token.name,
   })
   // Add charge to customer
     .then(customer => stripe.charges.create({
