@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 //     err.status = 404;
 //     next(err);
 // });
-// // // Display error
+// // Display error
 // app.use( function(err, req, res, next) {
 //     res.status( err.code || 500 )
 //     .json({
@@ -33,8 +33,6 @@ app.use((req, res, next) => {
 // });
 // Set up post endpoint for angular form
 app.post('/charge/angular', (req, res) => {
-  // Output event
-  res.send('Saw that POST!');
   // Create address object
   const address = {
     address: {
@@ -52,31 +50,53 @@ app.post('/charge/angular', (req, res) => {
     source: req.body.token.id,
     shipping: address,
     name: req.body.token.name,
-  })
-  // Add charge to customer
-    .then(customer => stripe.charges.create({
+  }, (err, customers) => {
+    stripe.charges.create({
       amount: req.body.amount,
       currency: req.body.currency,
       description: 'Donation to Keyman',
-      customer: customer.id,
+      customer: customers.id,
       receipt_email: req.body.token.email,
-    }));
-// Successfull api call
-  // .then(res => {
-  //   res.status(200)
-  //     .json({
-  //       status: '200',
-  //       message: res,
-  //     });
-  // })
-  // Handle api failure
-  // .catch(res => {
-  //   res.status(500)
-  //      .json({
-  //        status: '500',
-  //        message: res,
-  //      });
-  // })
+    }, (err, charges) => {
+      // Handle errors
+      console.log(err.type);
+      if (err !== null) {
+        switch (err.type) {
+          case 'StripeCardError':
+            // A declined card error
+            err.message = "Your card's expiration year is invalid.";
+            res.send(err.message);
+            break;
+          case 'StripeInvalidRequestError':
+            // Invalid parameters were supplied to Stripe's API
+            err.message = "Invalid parameters were supplied to Stripe's API.";
+            console.log('he');
+            res.send(err.message);
+            break;
+          case 'StripeAPIError':
+            // An error occurred internally with Stripe's API
+            err.message = "An error occurred internally with Stripe's API.";
+            res.send(err.message);
+            break;
+          case 'StripeConnectionError':
+            // Some kind of error occurred during the HTTPS communication
+            err.message = 'Some kind of error occurred during the HTTPS communication.';
+            res.send(err.message);
+            break;
+          case 'StripeAuthenticationError':
+            // You probably used an incorrect API key
+            err.message = 'You probably used an incorrect API keyß.';
+            res.send(err.message);
+            break;
+          case 'StripeRateLimitError':
+            // Too many requests hit the API too quickly
+            err.message = 'Too many requests hit the API too quickly.';
+            res.send(err.message);
+            break;
+        }
+      }
+    });
+  });
 });
 // Listen on port 4567
 app.listen(process.env.PORT || 4567, () => {
