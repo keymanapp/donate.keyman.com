@@ -1,6 +1,5 @@
 // API with basic form
 // Set local environment variables
-const keyPublishable = process.env.pk_test;
 const keySecret = process.env.sk_test;
 // Set up express
 const app = require('express')();
@@ -36,10 +35,23 @@ app.use((req, res, next) => {
 app.post('/charge/angular', (req, res) => {
   // Output event
   res.send('Saw that POST!');
+  // Create address object
+  const address = {
+    address: {
+      line1: req.body.data.billing_address_line1,
+      city: req.body.data.billing_address_city,
+      state: req.body.data.billing_address_state,
+      postal_code: req.body.data.billing_address_zip,
+      country: req.body.data.billing_address_country,
+    },
+    name: null,
+  };
   // Create customer first
   stripe.customers.create({
     email: req.body.token.email,
     source: req.body.token.id,
+    shipping: address,
+    name: req.body.token.name,
   })
   // Add charge to customer
     .then(customer => stripe.charges.create({
