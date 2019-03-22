@@ -50,16 +50,15 @@ app.post('/charge/angular', (req, res) => {
     source: req.body.token.id,
     shipping: address,
     name: req.body.token.name,
-  }, (err, customers) => {
+  }, (err, customer) => {
     stripe.charges.create({
       amount: req.body.amount,
       currency: req.body.currency,
       description: 'Donation to Keyman',
-      customer: customers.id,
+      customer: customer.id,
       receipt_email: req.body.token.email,
     }, (err, charges) => {
       // Handle errors
-      console.log(err.type);
       if (err !== null) {
         switch (err.type) {
           case 'StripeCardError':
@@ -70,7 +69,6 @@ app.post('/charge/angular', (req, res) => {
           case 'StripeInvalidRequestError':
             // Invalid parameters were supplied to Stripe's API
             err.message = "Invalid parameters were supplied to Stripe's API.";
-            console.log('he');
             res.send(err.message);
             break;
           case 'StripeAPIError':
