@@ -50,9 +50,9 @@ export class AppComponent {
           'currency': self.model.currency,
           'data': tokenData,
         };
-        const apiURL = 'http://localhost:4567/charge/angular';
+        const apiURL = 'http://localhost:4567/charge';
         self.http.post(apiURL, postData, {
-          // headers: new HttpHeaders().set('Content-Type', 'application/json'),
+          headers: new HttpHeaders().set('Content-Type', 'application/json'),
           observe: 'response', // TODO How do we catch 4xx errors?
         }).subscribe(
           data => {
