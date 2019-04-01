@@ -28,6 +28,7 @@
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
+    "ansi-styles": "^3.2.1",
     "extglob": "^3.0.0",
     "arr-diff": "^4.0.0",
     "array-unique": "^0.3.2",
