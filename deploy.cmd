@@ -103,6 +103,8 @@ echo 3. Angular Prod Build
 IF EXIST "%DEPLOYMENT_SOURCE%/angular.json" (
 echo Building App in %DEPLOYMENT_SOURCE%…
 pushd "%DEPLOYMENT_SOURCE%"
+cd ./node_modules/@angular/cli
+call !NPM_CMD! install
 call :ExecuteCmd !NPM_CMD! run build
 :: If the above command fails comment above and uncomment below one
 :: call ./node_modules/.bin/ng build –prod
