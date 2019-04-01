@@ -89,17 +89,17 @@ goto :EOF
 echo Handling node.js deployment.
 
 
-:: 1. Select node version
+echo 1. Select node version
 call :SelectNodeVersion
 
-:: 2. Install npm packages
+echo  2. Install npm packages
 IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   pushd "%DEPLOYMENT_SOURCE%"
   call :ExecuteCmd !NPM_CMD! install --production
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
-:: 3. Angular Prod Build
+echo 3. Angular Prod Build
 IF EXIST "%DEPLOYMENT_SOURCE%/.angular.json" (
 echo Building App in %DEPLOYMENT_SOURCE%…
 pushd "%DEPLOYMENT_SOURCE%"
