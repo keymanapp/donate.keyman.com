@@ -105,6 +105,7 @@ echo Building App in %DEPLOYMENT_SOURCE%…
 pushd "%DEPLOYMENT_SOURCE%"
 cd ./node_modules/@angular/cli
 call !NPM_CMD! install
+cd ../../../
 call :ExecuteCmd !NPM_CMD! run build
 :: If the above command fails comment above and uncomment below one
 :: call ./node_modules/.bin/ng build –prod
