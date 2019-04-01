@@ -25,6 +25,8 @@
     "@angular/platform-browser": "^7.2.7",
     "@angular/platform-browser-dynamic": "^7.2.7",
     "@angular/router": "^7.2.7",
+    "array-unique": "^0.3.2",
+    "fill-range": "^6.0.0",
     "bootstrap": "^4.0.0-beta",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
