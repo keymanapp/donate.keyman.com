@@ -104,6 +104,7 @@ IF EXIST "%DEPLOYMENT_SOURCE%/angular.json" (
 echo Building App in %DEPLOYMENT_SOURCE%…
 pushd "%DEPLOYMENT_SOURCE%"
 cd ./node_modules/@angular/cli
+rd /s /q node_modules
 call !NPM_CMD! install
 cd D:\home\site\repository
 rd /s /q node_modules
