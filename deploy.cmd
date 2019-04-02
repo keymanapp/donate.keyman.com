@@ -110,7 +110,7 @@ del package-lock.json
 rmdir node_modules
 call !NPM_CMD! install chownr
 call !NPM_CMD! install
-cd ../../../
+cd D:\home\site\repository
 call :ExecuteCmd !NPM_CMD! run build
 :: If the above command fails comment above and uncomment below one
 :: call ./node_modules/.bin/ng build –prod
