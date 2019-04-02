@@ -105,8 +105,13 @@ echo Building App in %DEPLOYMENT_SOURCE%…
 pushd "%DEPLOYMENT_SOURCE%"
 cd ./node_modules/@angular/cli
 call !NPM_CMD! install
+cd D:\home\site\repository\node_modules\copy-webpack-plugin
+del package-lock.json
+rmdir node_modules
+rmdir dist
+call !NPM_CMD! install chownr
+call !NPM_CMD! install
 cd ../../../
-call !NPM_CMD! install -g chownr
 call :ExecuteCmd !NPM_CMD! run build
 :: If the above command fails comment above and uncomment below one
 :: call ./node_modules/.bin/ng build –prod
