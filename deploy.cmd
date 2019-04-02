@@ -108,7 +108,6 @@ call !NPM_CMD! install
 cd D:\home\site\repository\node_modules\copy-webpack-plugin
 del package-lock.json
 rmdir node_modules
-rmdir dist
 call !NPM_CMD! install chownr
 call !NPM_CMD! install
 cd ../../../
