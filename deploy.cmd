@@ -63,7 +63,7 @@ IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
     SET /p NODE_EXE=<"%DEPLOYMENT_TEMP%\__nodeVersion.tmp"
     IF !ERRORLEVEL! NEQ 0 goto error
   )
-  
+
   IF EXIST "%DEPLOYMENT_TEMP%\__npmVersion.tmp" (
     SET /p NPM_JS_PATH=<"%DEPLOYMENT_TEMP%\__npmVersion.tmp"
     IF !ERRORLEVEL! NEQ 0 goto error
@@ -89,23 +89,29 @@ goto :EOF
 echo Handling node.js deployment.
 
 
-:: 1. Select node version
+echo 1. Select node version
 call :SelectNodeVersion
 
-:: 2. Install npm packages
+echo  2. Install npm packages
 IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   pushd "%DEPLOYMENT_SOURCE%"
-  call :ExecuteCmd !NPM_CMD! install --production
+  call :ExecuteCmd !NPM_CMD! install
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
-:: 3. Angular Prod Build
-IF EXIST "%DEPLOYMENT_SOURCE%/.angular.json" (
+echo 3. Angular Prod Build
+IF EXIST "%DEPLOYMENT_SOURCE%/angular.json" (
 echo Building App in %DEPLOYMENT_SOURCE%…
 pushd "%DEPLOYMENT_SOURCE%"
-:: call :ExecuteCmd !NPM_CMD! run build
+cd ./node_modules/@angular/cli
+rd /s /q node_modules
+call !NPM_CMD! install
+cd D:\home\site\repository
+rd /s /q node_modules
+call !NPM_CMD! install
+call :ExecuteCmd !NPM_CMD! run build
 :: If the above command fails comment above and uncomment below one
-call ./node_modules/.bin/ng build –prod
+:: call ./node_modules/.bin/ng build –prod
 IF !ERRORLEVEL! NEQ 0 goto error
 popd
 )
