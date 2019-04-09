@@ -1,1 +1,2 @@
-<script src="https://gist.github.com/4349245.js"></script>
+CALL deploy.node.cmd
+CALL deploy.angular.cmd
