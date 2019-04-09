@@ -115,6 +115,13 @@ call :ExecuteCmd !NPM_CMD! run build
 IF !ERRORLEVEL! NEQ 0 goto error
 popd
 )
+echo 4. Stripe-api build
+cd D:\home\site\repository\stripe-node
+call !NPM_CMD! install
+call :ExecuteCmd !NPM_CMD! start
+cd D:\home\site\repository
+IF !ERRORLEVEL! NEQ 0 goto error
+popd
 :: 4. KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%/dist" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
