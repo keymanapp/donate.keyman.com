@@ -94,9 +94,6 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
-echo 2. Select node version
-call :SelectNodeVersion
-
 echo 3. Install npm packages
 IF EXIST "%DEPLOYMENT_TARGET%\node-api\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
