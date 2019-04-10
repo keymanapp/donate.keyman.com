@@ -1,2 +1,2 @@
-REM CALL deploy.node.cmd
+CALL deploy.node.cmd
 CALL deploy.angular.cmd
