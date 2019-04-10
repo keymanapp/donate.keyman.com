@@ -29,7 +29,7 @@ export class AppComponent {
 
   constructor(private http: HttpClient) {
     const self = this;
-    let stripe_key = 'pk_test';
+    let stripe_key = 'pk_test_eM74cMSAfGXWvrLZnz7gCXuA';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
       stripe_key = (<any>window).app_data.stripe_key;
@@ -50,7 +50,7 @@ export class AppComponent {
           'currency': self.model.currency,
           'data': tokenData,
         };
-        const apiURL = 'http://localhost:4567/charge';
+        const apiURL = 'https://thelastkeyman.azurewebsites.net/charge';
         self.http.post(apiURL, postData, {
           headers: new HttpHeaders().set('Content-Type', 'application/json'),
           observe: 'response', // TODO How do we catch 4xx errors?
