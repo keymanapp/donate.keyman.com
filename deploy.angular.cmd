@@ -111,7 +111,7 @@ rd /s /q node_modules
 call !NPM_CMD! install
 call :ExecuteCmd !NPM_CMD! run build
 :: If the above command fails comment above and uncomment below one
-:: call ./node_modules/.bin/ng build –prod
+:: call ./node_modules/.bin/ng build –prod 
 IF !ERRORLEVEL! NEQ 0 goto error
 popd
 )
