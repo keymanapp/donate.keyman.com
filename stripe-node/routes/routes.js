@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const charge = require('../api/charge');
+const virtualDirPath = process.env.virtualDirPath || '';
 // Parse requests
 router.use(bodyParser.json());
 // Allow requests
@@ -13,11 +14,11 @@ router.use((req, res, next) => {
   next();
 });
 // Add routes
-router.get('/', (req, res) => {
+router.get(virtualDirPath + '/', (req, res) => {
   req.res.send('keyman-api');
 });
 // Find all of the postal codes in a state
-router.route('/charge')
+router.route(virtualDirPath + '/charge')
   .post(charge.sendData);
 // Export routes
 module.exports = router;
