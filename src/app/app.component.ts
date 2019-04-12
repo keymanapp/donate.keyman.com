@@ -50,7 +50,7 @@ export class AppComponent {
           'currency': self.model.currency,
           'data': tokenData,
         };
-        const apiURL = 'https://finalkeyman.azurewebsites.net/api/charge';
+        const apiURL = 'https://donate.keyman.com/api/charge';
         self.http.post(apiURL, postData, {
           headers: new HttpHeaders().set('Content-Type', 'application/json'),
           observe: 'response', // TODO How do we catch 4xx errors?
