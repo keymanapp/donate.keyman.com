@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint app.js",
     "fix": "./node_modules/.bin/eslint app.js --fix",
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
