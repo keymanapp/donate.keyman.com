@@ -2,7 +2,7 @@ import { AppPage } from './app.po';
 import { browser, by, element } from 'protractor';
 
 describe('Donate Keyman', () => {
-  const page: AppPage;
+  let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
