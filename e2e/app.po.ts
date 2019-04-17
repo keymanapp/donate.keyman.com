@@ -8,4 +8,10 @@ export class AppPage {
   getTitle() {
     return element(by.css('h3.donate-now-header')).getText();
   }
+
+  getItem(value) {
+    return browser.wait(function() {
+      return element(by.id('element-id')).getAttribute('type');
+    });
+  }
 }
