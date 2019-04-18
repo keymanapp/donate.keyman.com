@@ -51,40 +51,27 @@ export class AppComponent {
           'data': tokenData,
         };
         const apiURL = 'https://donate.keyman.com/api/charge';
+
         self.http.post(apiURL, postData, {
           headers: new HttpHeaders().set('Content-Type', 'application/json'),
           observe: 'response', // TODO How do we catch 4xx errors?
         }).subscribe(
-          data => {
-            console.log(data.status, data.body);
-            self.model.phase = 'final';
-            if (data.status === 201) {
-              self.model.resultCode = 201;
-              self.model.result = 'success';
-            } else {
-              // self.model.phase = 'final';
-              // self.model.result = 'fail';
-              // self.model.resultCode = data.status;
-              // var errorInfo = data.body;
-              // self.model.resultMessage = <any>errorInfo.message;
-                  // self.model.resultMessage =
-            }
+          success => {
+            // Handle result
+            console.log('POST call successful value returned in body', success);
+          },
+          error => {
+            this.errors = error;
+            console.log('POST call in error!', error);
+            alert(error);
+          },
+          () => {
+            console.log('Post call finished');
           }
-          // error => {
-          //   self.model.phase = 'final';
-          //   self.model.result = 'fail';
-          //   self.model.resultCode = error.status;
-          //
-          //   const errorInfo = JSON.parse(error.error);
-          //   self.model.resultMessage = errorInfo.message;
-          //
-          //   console.log(errorInfo);
-          // }
         );
       }
     });
   }
-
   updateAmounts() {
     const onceAmounts = {
       'usd': ['20', '50', '100', '200'],
