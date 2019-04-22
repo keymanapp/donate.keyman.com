@@ -72,7 +72,10 @@ const sendData = (req, res, next) => {
             break;
         }
       }
-    });
+    }, (charge) => {
+      res.send(charge);
+    }
+    );
   });
 };
 // Export as module
