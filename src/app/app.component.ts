@@ -8,6 +8,8 @@ import { AppModel } from './app.model';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  successMessage: string = '';
+  errorMessage: string = '';
 
   currencies = [ 'usd', 'aud', 'eur', 'gbp', 'krw', 'nzd', 'thb' ];
 
@@ -49,7 +51,7 @@ export class AppComponent {
           'amount': self.amountForCard(),
           'currency': self.model.currency,
           'data': tokenData,
-        };
+        }; 
         const apiURL = 'https://donate.keyman.com/api/charge';
 
         self.http.post(apiURL, postData, {
@@ -59,12 +61,12 @@ export class AppComponent {
           success => {
             // Handle result
             console.log('POST call successful value returned in body', success);
-            alert('The transaction has been completed. Thank you for your donation!');
+            self.successMessage = 'The transaction has been completed. Thank you for you donation!';
           },
           error => {
             this.errors = error;
-            console.log('POST call in error!', error);
-            alert('Sorry. Something went wrong! Here is what the server sent back: ' + error);
+            console.log('POST call in error!');
+            self.errorMessage = 'Something went wrong! Here is what the server sent back: ' + error.statusText;
           },
           () => {
             console.log('Post call finished');
@@ -73,6 +75,7 @@ export class AppComponent {
       }
     });
   }
+
   updateAmounts() {
     const onceAmounts = {
       'usd': ['20', '50', '100', '200'],
@@ -209,3 +212,4 @@ export class AppComponent {
   }
 
 }
+
