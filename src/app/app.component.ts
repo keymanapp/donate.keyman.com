@@ -59,11 +59,12 @@ export class AppComponent {
           success => {
             // Handle result
             console.log('POST call successful value returned in body', success);
+            alert('The transaction has been completed. Thank you for your donation!');
           },
           error => {
             this.errors = error;
             console.log('POST call in error!', error);
-            alert(error);
+            alert('Sorry. Something went wrong! Here is what the server sent back: ' + error);
           },
           () => {
             console.log('Post call finished');

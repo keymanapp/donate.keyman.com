@@ -38,44 +38,44 @@ const sendData = (req, res, next) => {
       description: description,
       customer: customer.id,
       receipt_email: req.body.token.email,
+      metadata: {'application': 'keyman'}
     }, (err, charges) => {
       // Handle errors
       if (err !== null) {
         switch (err.type) {
           case 'StripeCardError':
             // A declined card error
-            err.message; // => e.g. "Your card's expiration year is invalid."
+            res.send(err.message); // => e.g. "Your card's expiration year is invalid."
             break;
           case 'RateLimitError':
             // Too many requests made to the API too quickly
-            err.message;
+            res.send(err.message);
             break;
           case 'StripeInvalidRequestError':
             // Invalid parameters were supplied to Stripe's API
-            err.message;
+            res.send(err.message);
             break;
           case 'StripeAPIError':
             // An error occurred internally with Stripe's API
-            err.message;
+            res.send(err.message);
             break;
           case 'StripeConnectionError':
             // Some kind of error occurred during the HTTPS communication
-            err.message;
+            res.send(err.message);
             break;
           case 'StripeAuthenticationError':
             // You probably used an incorrect API key
-            err.message;
+            res.send(err.message);
             break;
           default:
             // Handle any other types of unexpected errors
-            err.message;
+            res.send(err.message);
             break;
         }
+      } else{
+        res.status(200).send(charges)
       }
-    }, (charge) => {
-      res.send(charge);
-    }
-    );
+    });
   });
 };
 // Export as module
