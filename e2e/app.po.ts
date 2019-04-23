@@ -5,7 +5,13 @@ export class AppPage {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getTitle() {
+    return element(by.css('h3.donate-now-header')).getText();
+  }
+
+  getItem(value) {
+    return browser.wait(function() {
+      return element(by.id('element-id')).getAttribute('type');
+    });
   }
 }
