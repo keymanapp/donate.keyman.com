@@ -11,7 +11,7 @@ export class AppComponent {
   successMessage: string = '';
   errorMessage: string = '';
 
-  currencies = [ 'usd', 'aud', 'eur', 'gbp', 'krw', 'nzd', 'thb' ];
+  currencies = [ 'usd', 'aud', 'eur', 'gbp', 'krw', 'nzd', 'thb', 'jpy', 'brl', 'cad' ];
 
   currencySymbols = {
     'usd': '$',
@@ -21,6 +21,9 @@ export class AppComponent {
     'krw': '₩',
     'nzd': '$',
     'thb': '฿',
+    'jpy': '¥',
+    'brl': '$',
+    'cad': '$'
   };
 
   model: AppModel = new AppModel('usd', 'single', 0);
@@ -85,6 +88,9 @@ export class AppComponent {
       'nzd': ['50', '100', '200', '500'],
       'thb': ['500', '1000', '2000', '5000'],
       'krw': ['20000', '50000', '100000', '200000'],
+      'jpy': ['2000', '5000', '10000', '20000'],
+      'brl': ['80', '200', '400', '800'],
+      'cad': ['20', '70', '100', '200']
     };
     const monthlyAmounts = {
       'usd': ['10', '20', '50', '5'],
@@ -94,6 +100,9 @@ export class AppComponent {
       'nzd': ['10', '20', '50', '5'],
       'thb': ['200', '400', '500', '100'],
       'krw': ['10000', '20000', '50000', '5000'],
+      'jpy': ['1000', '2000', '5000', '500'],
+      'brl': ['40', '100', '200', '60'],
+      'cad': ['10', '30', '50', '100']
     };
     if (this.model.frequency === 'monthly') {
       this.amounts = monthlyAmounts[this.model.currency];
