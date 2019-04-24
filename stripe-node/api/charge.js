@@ -16,7 +16,7 @@ const sendData = (req, res, next) => {
   };
   let amount = parseInt(req.body.amount) / 100;
   const description = 'Dear ' + req.body.data.billing_name + ', Thank you for your generous contribution of ' +
-   req.body.currency + ' ' + amount.toFixed(2) + ' to SIL International, with preference for ' + req.body.data.billing_name  +
+   req.body.currency + ' ' + amount.toFixed(2) + ' to SIL International, with preference for Keyman' +
    '. This letter serves as a receipt for your contribution. Founded over 80 years ago, SIL International' +
    ' is committed to serving language communities worldwide as they build capacity for sustainable language development.' +
    ' SIL does this primarily through research, translation, training and materials development.' +
