@@ -16,7 +16,7 @@ const sendData = (req, res, next) => {
   };
   let amount = parseInt(req.body.amount) / 100;
   const description = 'Dear ' + req.body.data.billing_name + ', Thank you for your generous contribution of ' +
-   req.body.currency + ' ' + amount.toFixed(2) + ' to SIL International, with preference for ' + req.body.data.billing_name  +
+   req.body.currency + ' ' + amount.toFixed(2) + ' to SIL International, with preference for Keyman' +
    '. This letter serves as a receipt for your contribution. Founded over 80 years ago, SIL International' +
    ' is committed to serving language communities worldwide as they build capacity for sustainable language development.' +
    ' SIL does this primarily through research, translation, training and materials development.' +
@@ -38,44 +38,44 @@ const sendData = (req, res, next) => {
       description: description,
       customer: customer.id,
       receipt_email: req.body.token.email,
+      metadata: {'application': 'keyman'}
     }, (err, charges) => {
       // Handle errors
       if (err !== null) {
         switch (err.type) {
           case 'StripeCardError':
             // A declined card error
-            err.message; // => e.g. "Your card's expiration year is invalid."
+            res.send(err.message); // => e.g. "Your card's expiration year is invalid."
             break;
           case 'RateLimitError':
             // Too many requests made to the API too quickly
-            err.message;
+            res.send(err.message);
             break;
           case 'StripeInvalidRequestError':
             // Invalid parameters were supplied to Stripe's API
-            err.message;
+            res.send(err.message);
             break;
           case 'StripeAPIError':
             // An error occurred internally with Stripe's API
-            err.message;
+            res.send(err.message);
             break;
           case 'StripeConnectionError':
             // Some kind of error occurred during the HTTPS communication
-            err.message;
+            res.send(err.message);
             break;
           case 'StripeAuthenticationError':
             // You probably used an incorrect API key
-            err.message;
+            res.send(err.message);
             break;
           default:
             // Handle any other types of unexpected errors
-            err.message;
+            res.send(err.message);
             break;
         }
+      } else{
+        res.status(200).send(charges)
       }
-    }, (charge) => {
-      res.send(charge);
-    }
-    );
+    });
   });
 };
 // Export as module
