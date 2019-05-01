@@ -9,6 +9,7 @@ import { UnitsPipe } from './units.pipe';
 import {RouterModule, Routes} from '@angular/router';
 import { FaqComponent } from './faq/faq.component';
 import { HomeComponent } from './home/home.component';
+import { WaysToGiveComponent } from './ways-to-give/ways-to-give.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'faq',
     component: FaqComponent
+  },
+  {
+    path: 'ways-to-give',
+    component: WaysToGiveComponent
   }
 ];
 
@@ -27,6 +32,7 @@ const routes: Routes = [
     AppComponent,
     HomeComponent,
     FaqComponent,
+    WaysToGiveComponent,
     UnitsPipe
   ],
   imports: [
