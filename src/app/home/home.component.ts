@@ -9,6 +9,8 @@ import { Currencies } from '../currencies';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  successMessage: string = '';
+  errorMessage: string = '';
 
   model: AppModel = new AppModel('usd', 'single', 0);
 
@@ -51,11 +53,12 @@ export class HomeComponent {
           success => {
             // Handle result
             console.log('POST call successful value returned in body', success);
+            self.successMessage = 'The transaction has been completed. Thank you for you donation!';
           },
           error => {
             this.errors = error;
-            console.log('POST call in error!', error);
-            alert(error);
+            console.log('POST call in error!');
+            self.errorMessage = 'Something went wrong! Here is what the server sent back: ' + error.statusText;
           },
           () => {
             console.log('Post call finished');
