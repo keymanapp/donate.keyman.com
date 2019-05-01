@@ -1,0 +1,18 @@
+.header {
+  background: white;
+  background-image: url('assets/headerbar.png');
+  background-size: 100% 8px;
+  background-position: 0px bottom;
+  background-repeat: no-repeat;
+
+  .container {
+    padding: 8px 0 16px;
+  }
+
+  .row a {
+    color: #333333;
+    font-weight: normal;
+    margin-right: 16px;
+    margin-left: 16px;
+  }
+}
