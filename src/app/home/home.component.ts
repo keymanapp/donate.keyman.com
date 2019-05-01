@@ -23,7 +23,7 @@ export class HomeComponent {
   constructor(private http: HttpClient) {
     const self = this;
     this.Currencies = Currencies;
-    let stripe_key = 'pk_test_eM74cMSAfGXWvrLZnz7gCXuA';
+    let stripe_key = 'pk_live_xrVON4jadpeT4rDWMrLSl9fp';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
       stripe_key = (<any>window).app_data.stripe_key;
