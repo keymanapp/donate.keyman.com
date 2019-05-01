@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppModel } from '../app.model';
+import { Currencies } from '../currencies';
 
 @Component({
   selector: 'app-root',
@@ -9,26 +10,17 @@ import { AppModel } from '../app.model';
 })
 export class HomeComponent {
 
-  currencies = [ 'usd', 'aud', 'eur', 'gbp', 'krw', 'nzd', 'thb' ];
-
-  currencySymbols = {
-    'usd': '$',
-    'aud': '$',
-    'eur': '€',
-    'gbp': '£',
-    'krw': '₩',
-    'nzd': '$',
-    'thb': '฿',
-  };
-
   model: AppModel = new AppModel('usd', 'single', 0);
 
   amounts: Array<string>;
+
+  Currencies: Currencies;
 
   private stripe;
 
   constructor(private http: HttpClient) {
     const self = this;
+    this.Currencies = Currencies;
     let stripe_key = 'pk_test_eM74cMSAfGXWvrLZnz7gCXuA';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
@@ -73,40 +65,16 @@ export class HomeComponent {
     });
   }
   updateAmounts() {
-    const onceAmounts = {
-      'usd': ['20', '50', '100', '200'],
-      'aud': ['30', '60', '100', '200'],
-      'eur': ['15', '40', '80', '150'],
-      'gbp': ['15', '30', '60', '100'],
-      'nzd': ['50', '100', '200', '500'],
-      'thb': ['500', '1000', '2000', '5000'],
-      'krw': ['20000', '50000', '100000', '200000'],
-    };
-    const monthlyAmounts = {
-      'usd': ['10', '20', '50', '5'],
-      'aud': ['10', '20', '50', '5'],
-      'eur': ['10', '50', '100', '5'],
-      'gbp': ['5', '20', '40', '3'],
-      'nzd': ['10', '20', '50', '5'],
-      'thb': ['200', '400', '500', '100'],
-      'krw': ['10000', '20000', '50000', '5000'],
-    };
     if (this.model.frequency === 'monthly') {
-      this.amounts = monthlyAmounts[this.model.currency];
+      this.amounts = Currencies.currencies[this.model.currency].monthlyAmounts;
     } else {
-      this.amounts = onceAmounts[this.model.currency];
+      this.amounts = Currencies.currencies[this.model.currency].onceAmounts;
     }
-  }
-
-  isZeroDecimalCurrency(currency: string) {
-    // TODO Make this check for value in array if we ever support more than KRW.
-    // See https://stripe.com/docs/currencies
-    return currency === 'krw' ? true : false;
   }
 
   amountForCard() {
     // console.log(this.model.paySelection);
-    const multiplier = this.isZeroDecimalCurrency(this.model.currency) ? 1 : 100;
+    const multiplier = Currencies.isZeroDecimalCurrency(this.model.currency) ? 1 : 100;
     if (this.model.paySelection >= 0 && this.model.paySelection < 4) {
       return Number(this.amounts[this.model.paySelection]) * multiplier;
     }

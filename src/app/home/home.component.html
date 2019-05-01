@@ -51,7 +51,7 @@
           </div>
           <div class="col-4">
             <select name="currency" class="form-control currency-dropdown" [(ngModel)]="model.currency" (change)="updateAmounts()">
-              <option *ngFor="let c of currencies" value="{{c}}">{{c}} &nbsp; {{currencySymbols[c]}}</option>
+              <option *ngFor="let c of Currencies.currencyCodes" value="{{c}}">{{c}} &nbsp; {{Currencies.currencies[c].symbol}}</option>
             </select>
           </div>
         </div>
@@ -70,7 +70,7 @@
           <div class="row donation-amount-row">
             <div class="col" *ngFor="let n of [0, 1, 2]">
               <label for="pay-{{n}}" class="btn-lg btn-secondary amount-button amount-control" [class.amount-active]="model.paySelection==n">
-                <span>{{currencySymbols[model.currency]}}{{amounts[n] | units:4}}</span>
+                <span>{{Currencies.currencies[model.currency].symbol}}{{amounts[n] | units:4}}</span>
                 <input type="radio" class="amount-radio" name="pay_selection" value="{{n}}" [(ngModel)]="model.paySelection" id="pay-{{n}}">
               </label>
             </div>
@@ -78,7 +78,7 @@
           <div class="row donation-amount-row">
             <div class="col-4">
               <label for="pay-3" class="btn-lg btn-secondary amount-button amount-control" [class.amount-active]="model.paySelection==3">
-                <span>{{currencySymbols[model.currency]}}{{amounts[3] | units:4}}</span>
+                <span>{{Currencies.currencies[model.currency].symbol}}{{amounts[3] | units:4}}</span>
                 <input type="radio" class="amount-radio" name="pay_selection" value="3" [(ngModel)]="model.paySelection" id="pay-3">
               </label>
             </div>
@@ -87,7 +87,7 @@
                 <!-- <label for="amount-other" class="btn-lg btn-secondary amount-button amount-control" id="amount-other-label"> -->
                   <input type="radio" class="amount-radio amount-control" id="pay-other" name="pay_selection" value="4" [(ngModel)]="model.paySelection">
                     <div class="input-group amount-control">
-                      <span class="input-group-addon" id="basic-addon1" [class.amount-active]="model.paySelection==4">{{currencySymbols[model.currency]}}</span>
+                      <span class="input-group-addon" id="basic-addon1" [class.amount-active]="model.paySelection==4">{{Currencies.currencies[model.currency].symbol}}</span>
                       <input type="text" class="form-control" name="pay_amount" placeholder="Other amount" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="model.payAmount" (focus)="model.paySelection=4">
                     </div>
                 <!-- </label> -->
