@@ -10,6 +10,8 @@ import {RouterModule, Routes} from '@angular/router';
 import { FaqComponent } from './faq/faq.component';
 import { HomeComponent } from './home/home.component';
 import { WaysToGiveComponent } from './ways-to-give/ways-to-give.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 const routes: Routes = [
   {
@@ -33,7 +35,9 @@ const routes: Routes = [
     HomeComponent,
     FaqComponent,
     WaysToGiveComponent,
-    UnitsPipe
+    UnitsPipe,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

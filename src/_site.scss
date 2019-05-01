@@ -1,14 +1,23 @@
 body {
-    color: #333;
+  color: #333;
 }
 
 .doc-header {
-    background: #eaeff2;
-    padding: 3em 0 2em;
-    margin: 0 0 1em 0;
-    h1 {
-      font-size: 48px;
-      text-align: center;
-    }
+  background: #eaeff2;
+  padding: 3em 0 2em;
+  margin: 0 0 1em 0;
+  h1 {
+    font-size: 48px;
+    text-align: center;
   }
+}
+  
+.doc-content .container {
+  background: white;
+  border-radius: 6px;
+
+  h2 {
+    margin-top: 16px;
+  }
+}
   
