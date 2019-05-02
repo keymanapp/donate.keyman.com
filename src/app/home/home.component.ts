@@ -11,6 +11,7 @@ import { Currencies } from '../currencies';
 export class HomeComponent {
   successMessage: string = '';
   errorMessage: string = '';
+  receiptLink: string = '';
 
   model: AppModel = new AppModel('usd', 'single', 0);
 
@@ -23,7 +24,7 @@ export class HomeComponent {
   constructor(private http: HttpClient) {
     const self = this;
     this.Currencies = Currencies;
-    let stripe_key = 'pk_test_eM74cMSAfGXWvrLZnz7gCXuA';
+    let stripe_key = 'pk_live_xrVON4jadpeT4rDWMrLSl9fp';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
       stripe_key = (<any>window).app_data.stripe_key;
@@ -53,7 +54,8 @@ export class HomeComponent {
           success => {
             // Handle result
             console.log('POST call successful value returned in body', success);
-            self.successMessage = 'The transaction has been completed. Thank you for you donation!';
+            self.successMessage = 'The transaction has been completed. Thank you for your donation!';
+            self.receiptLink = success.body['receipt_url'];
           },
           error => {
             this.errors = error;

@@ -1,5 +1,5 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+<div *ngIf="successMessage" class="alert alert-success">{{ successMessage }} <a href="{{ receiptLink }}">Your receipt is available here. </a></div>
 <div *ngIf="errorMessage" class="alert alert-error" style="background-color: #ff6363;">{{ errorMessage }}</div>
 <form>
 <div class="container additional-page">
@@ -22,6 +22,8 @@
               to allow all communities to type in their own language on computers and mobile devices.
             </p>
             <p>Help us support language communities with Keyman by giving today.</p>
+            <img class="sil-logo" height="140" width="157" src="assets/sil-logo.png" alt="SIL">
+            <p>Created by <a href="https://www.sil.org/">SIL International</a></p>
           </div>
         </div>
       </div>
