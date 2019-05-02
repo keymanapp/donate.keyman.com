@@ -54,7 +54,7 @@ export class HomeComponent {
           success => {
             // Handle result
             console.log('POST call successful value returned in body', success);
-            self.successMessage = 'The transaction has been completed. Thank you for you donation!';
+            self.successMessage = 'The transaction has been completed. Thank you for your donation!';
             self.receiptLink = success.body['receipt_url'];
           },
           error => {
