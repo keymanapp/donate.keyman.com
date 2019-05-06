@@ -15,16 +15,16 @@ const sendData = (req, res, next) => {
     name: null,
   };
   let amount = parseInt(req.body.amount) / 100;
-  const description = 'Dear ' + req.body.data.billing_name + ', Thank you for your generous contribution of ' +
+  const description = 'Dear ' + req.body.data.billing_name + ', \n \n Thank you for your generous contribution of ' +
    req.body.currency + ' ' + amount.toFixed(2) + ' to SIL International, with preference for Keyman' +
-   '. This letter serves as a receipt for your contribution. Founded over 80 years ago, SIL International' +
+   '. This letter serves as a receipt for your contribution. \n \n Founded over 80 years ago, SIL International' +
    ' is committed to serving language communities worldwide as they build capacity for sustainable language development.' +
    ' SIL does this primarily through research, translation, training and materials development.' +
    ' SIL works alongside ethnolinguistic communities and their partners as they discover how language development' +
    ' addresses the challenging areas of their daily lives—social, cultural, political, economic and spiritual.' +
-   ' Currently, SIL works alongside speakers of more than 1,700 languages in over 100 countries. SIL International ' +
+   ' Currently, SIL works alongside speakers of more than 1,700 languages in over 100 countries. \n \n SIL International ' +
    ' is a nonprofit organization under section 501(c)(3) of the IRS code. No goods or services were provided in consideration of this gift.' +
-   ' Your donation is tax deductible. Thank you for partnering with us in making a difference in the lives of people all over the world!';
+   ' Your donation is tax deductible. \n \n Thank you for partnering with us in making a difference in the lives of people all over the world!';
     // Create customer first
   stripe.customers.create({
     email: req.body.token.email,
