@@ -30,7 +30,7 @@ const sendData = (req, res, next) => {
     email: req.body.token.email,
     source: req.body.token.id,
     shipping: address,
-    name: req.body.token.name,
+    name: req.body.data.billing_name,
   }, (err, customer) => {
     stripe.charges.create({
       amount: req.body.amount,
