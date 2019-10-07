@@ -6,14 +6,6 @@ This project was mirrored from [cams-donatinator](https://github.com/cambell-pri
 
 Install [nodejs](https://nodejs.org/en/download/)
 
-Install [Composer](https://getcomposer.org/Composer-Setup.exe)
-
-Install [MySql](https://dev.mysql.com/downloads/installer/) and create database `keyman_fa`
-
-Install [FrontAccounting](https://github.com/sillsdev/web-frontaccounting) and deploy locally as `http://bms.keyman.com.local` on IIS. 
-
-Install [FrontAccountingSimpleAPI](https://github.com/sillsdev/web-frontaccounting-simpleapi) as a subfolder *frontaccounting*/modules/api
-
 Install Angular CLI globally and locally (This takes a while)
 ```
 npm install -g @angular/cli
@@ -30,12 +22,8 @@ composer install
 
 ## Development server
 
-Run `ng serve --public-host=http://donate.keyman.com.local`. Navigate to `http://donate.keyman.com.local:4200` or `localhost:4200`. 
+Run `ng serve --public-host=http://donate.keyman.com.local`. Navigate to `http://donate.keyman.com.local:4200` or `localhost:4200`.
 The app will The app will automatically reload if you change any of the source files.
-
-## Debugging with PHPStorm
-
-Install [XDebug](https://xdebug.org/wizard.php) and configure [PhpStorm](https://blog.jetbrains.com/webstorm/2017/01/debugging-angular-apps/).
 
 ## Code scaffolding
 
