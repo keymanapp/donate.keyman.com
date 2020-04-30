@@ -30,7 +30,7 @@
     "fill-range": "^6.0.0",
     "font-awesome": "^4.7.0",
     "iconv-lite": "^0.4.24",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.15.0",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.0.0-rc.0",
