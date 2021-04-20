@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WayToGiveComponent } from './ways-to-give.component';
+import { WaysToGiveComponent } from './ways-to-give.component';
 
-describe('WayToGiveComponent', () => {
-  let component: WayToGiveComponent;
-  let fixture: ComponentFixture<WayToGiveComponent>;
+describe('WaysToGiveComponent', () => {
+  let component: WaysToGiveComponent;
+  let fixture: ComponentFixture<WaysToGiveComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WayToGiveComponent ]
+      declarations: [ WaysToGiveComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WayToGiveComponent);
+    fixture = TestBed.createComponent(WaysToGiveComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
