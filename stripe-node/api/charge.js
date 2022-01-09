@@ -15,6 +15,10 @@ const sendData = (req, res, next) => {
     name: null,
   };
   let amount = parseInt(req.body.amount) / 100;
+  if(amount < 5) {
+    res.send("The minimum contribution amount is $5.00");
+    return;
+  }
   const description = 'Dear ' + req.body.data.billing_name + ', \n \n Thank you for your generous contribution of ' +
    req.body.currency + ' ' + amount.toFixed(2) + ' to SIL International, with preference for Keyman' +
    '. This letter serves as a receipt for your contribution. \n \n Founded over 80 years ago, SIL International' +
