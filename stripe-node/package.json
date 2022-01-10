@@ -1,8 +1,8 @@
 {
-  "name": "webhook-signing-example-express",
+  "name": "donate-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint app.js",
     "fix": "./node_modules/.bin/eslint app.js --fix",

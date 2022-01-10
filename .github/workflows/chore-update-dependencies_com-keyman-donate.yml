@@ -25,8 +25,11 @@ jobs:
 
     - name: npm install, build, and test
       run: |
-        npm install
+        npm install --production
         npm run build --if-present
+        cd stripe-node
+        npm install --production
+
       # npm run test --if-present
       # < disabled because build-and-deploy action not supporting `ng test` at present
 
