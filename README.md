@@ -17,19 +17,39 @@ npm install
 ng build
 ```
 
-Install composer dependencies
-```
-cd htdocs
-composer install
-```
+## Environment
+
+Set the `sk_test` environment variable to the Stripe secret key:
+
+  ```sh
+  export sk_test=####
+  ```
+
+Use the legacy provider for openssl:
+
+  ```sh
+  export NODE_OPTIONS=--openssl-legacy-provider
+  ```
 
 ## Development server
 
-Run `export NODE_OPTIONS=--openssl-legacy-provider; ng serve --host=donate.keyman-local.com`.
+Run the server:
+
+  ```sh
+    ng serve --host=donate.keyman-local.com
+  ```
+
 Navigate to `http://donate.keyman-local.com:4200`.
 
 The app will The app will automatically reload if you change any of the source
 files.
+
+Alternatively, you can also run the server:
+
+  ```
+  ng build --prod
+  npm run start
+  ```
 
 ## Code scaffolding
 
