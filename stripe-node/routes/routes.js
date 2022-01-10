@@ -3,19 +3,25 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const charge = require('../api/charge');
+const path = require('path');
 
-// Parse requests
+// Support /api/charge JSON requirements
 router.use(bodyParser.json());
 
-// Add routes
+// Basic API routes
 router.get('/api/', (req, res) => {
   req.res.send('keyman-api');
 });
 
 router.route('/api/charge').post(charge.sendData);
 
-// Serve /dist
+// Serve static files and the home page
 router.use('/', express.static('../dist/', {index: 'app.view.html'}));
 
-// Export routes
+// Serve dynamic routes for Angular
+router.all('/*', function(req,res,next) {
+  console.log(req.method + ' ' + req.path);
+  res.sendFile(path.join(__dirname, '../../dist/app.view.html'));
+});
+
 module.exports = router;

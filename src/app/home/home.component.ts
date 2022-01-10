@@ -24,8 +24,8 @@ export class HomeComponent {
   constructor(private http: HttpClient, private changeDetectorRef: ChangeDetectorRef) {
     const self = this;
     this.Currencies = Currencies;
-    let stripe_key = 'pk_test_qHey9utza7fQ4SoPdWhJdXcm';
-    // let stripe_key = 'pk_live_xrVON4jadpeT4rDWMrLSl9fp';
+    // let stripe_key = 'pk_test_qHey9utza7fQ4SoPdWhJdXcm';
+    let stripe_key = 'pk_live_xrVON4jadpeT4rDWMrLSl9fp';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
       stripe_key = (<any>window).app_data.stripe_key;
@@ -74,6 +74,7 @@ export class HomeComponent {
       }
     });
   }
+
   updateAmounts() {
     if (this.model.frequency === 'monthly') {
       this.amounts = Currencies.currencies[this.model.currency].monthlyAmounts;
