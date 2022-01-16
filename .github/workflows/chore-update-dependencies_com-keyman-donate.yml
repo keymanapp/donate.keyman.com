@@ -1,0 +1,46 @@
+# Docs for the Azure Web Apps Deploy action: https://go.microsoft.com/fwlink/?linkid=2134798
+# More GitHub Actions for Azure: https://go.microsoft.com/fwlink/?linkid=2135048
+
+name: Azure App Service - com-keyman-donate(Production), Build and deploy NodeJS app
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # checkout the repo
+    - name: 'Checkout Github Action'
+      uses: actions/checkout@master
+
+
+    - name: Set up Node.js version
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+
+    - name: npm install, build, and cleanup
+      run: |
+        npm install
+        npm run build --if-present
+        rm -rf node_modules
+        npm install --production
+        rm -rf e2e src tslint.json tsconfig.json karma.conf.js protractor.conf.js
+        cd stripe-node
+        npm install --production
+
+      # npm run test --if-present
+      # < disabled because build-and-deploy action not supporting `ng test` at present
+
+    - name: Run Azure webapp deploy action using publish profile credentials
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: com-keyman-donate
+        slot-name: Production
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ADE2B4FC581D4F94A147FD789A23C124 }}
+        package: .
+

@@ -16,7 +16,7 @@ const sendData = (req, res, next) => {
   };
   let amount = parseInt(req.body.amount) / 100;
   if(amount < 5) {
-    res.send("The minimum contribution amount is $5.00");
+    res.status(400).send("The minimum contribution amount is $5.00");
     return;
   }
   const description = 'Dear ' + req.body.data.billing_name + ', \n \n Thank you for your generous contribution of ' +
@@ -49,31 +49,31 @@ const sendData = (req, res, next) => {
         switch (err.type) {
           case 'StripeCardError':
             // A declined card error
-            res.send(err.message); // => e.g. "Your card's expiration year is invalid."
+            res.status(400).send(err.message); // => e.g. "Your card's expiration year is invalid."
             break;
           case 'RateLimitError':
             // Too many requests made to the API too quickly
-            res.send(err.message);
+            res.status(400).send(err.message);
             break;
           case 'StripeInvalidRequestError':
             // Invalid parameters were supplied to Stripe's API
-            res.send(err.message);
+            res.status(400).send(err.message);
             break;
           case 'StripeAPIError':
             // An error occurred internally with Stripe's API
-            res.send(err.message);
+            res.status(400).send(err.message);
             break;
           case 'StripeConnectionError':
             // Some kind of error occurred during the HTTPS communication
-            res.send(err.message);
+            res.status(400).send(err.message);
             break;
           case 'StripeAuthenticationError':
             // You probably used an incorrect API key
-            res.send(err.message);
+            res.status(400).send(err.message);
             break;
           default:
             // Handle any other types of unexpected errors
-            res.send(err.message);
+            res.status(400).send(err.message);
             break;
         }
       } else{

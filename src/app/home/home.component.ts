@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppModel } from '../app.model';
 import { Currencies } from '../currencies';
@@ -21,9 +21,10 @@ export class HomeComponent {
 
   private stripe;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private changeDetectorRef: ChangeDetectorRef) {
     const self = this;
     this.Currencies = Currencies;
+    // let stripe_key = 'pk_test_qHey9utza7fQ4SoPdWhJdXcm';
     let stripe_key = 'pk_live_xrVON4jadpeT4rDWMrLSl9fp';
     if ((<any>window).app_data) {
       this.model.currency = (<any>window).app_data.currency;
@@ -45,22 +46,26 @@ export class HomeComponent {
           'currency': self.model.currency,
           'data': tokenData,
         };
-        const apiURL = 'https://donate.keyman.com/api/charge';
+        const apiURL = '/api/charge';
+
+        self.successMessage = '';
+        self.errorMessage = '';
 
         self.http.post(apiURL, postData, {
           headers: new HttpHeaders().set('Content-Type', 'application/json'),
-          observe: 'response', // TODO How do we catch 4xx errors?
+          observe: 'response',
         }).subscribe(
           success => {
             // Handle result
             console.log('POST call successful value returned in body', success);
             self.successMessage = 'The transaction has been completed. Thank you for your donation!';
             self.receiptLink = success.body['receipt_url'];
+            changeDetectorRef.detectChanges();
           },
           error => {
-            this.errors = error;
             console.log('POST call in error!');
-            self.errorMessage = 'Something went wrong! Here is what the server sent back: ' + error.statusText;
+            self.errorMessage = 'We are sorry, but your donation was not accepted: ' + error.statusText;
+            changeDetectorRef.detectChanges();
           },
           () => {
             console.log('Post call finished');
@@ -69,6 +74,7 @@ export class HomeComponent {
       }
     });
   }
+
   updateAmounts() {
     if (this.model.frequency === 'monthly') {
       this.amounts = Currencies.currencies[this.model.currency].monthlyAmounts;
@@ -89,83 +95,22 @@ export class HomeComponent {
     return 2000;
   }
 
-  // clickTest() {
-  //   // this.phase = this.phase == 'donate' ? 'final' : 'donate';
-  //   // this.result = 'fail';
-  //   const self = this;
-  //   const token = {
-  //     'card': {
-  //         'address_city': null,
-  //         'address_country': null,
-  //         'address_line1': null,
-  //         'address_line1_check': null,
-  //         'address_line2': null,
-  //         'address_state': null,
-  //         'address_zip': null,
-  //         'address_zip_check': null,
-  //         'brand': 'Visa',
-  //         'country': 'US',
-  //         'cvc_check': 'pass',
-  //         'dynamic_last4': null,
-  //         'exp_month': 12,
-  //         'exp_year': 2018,
-  //         'funding': 'credit',
-  //         'id': 'card_1BG3HgEPhVx1rk67aBaUHrbN',
-  //         'last4': '4242',
-  //         'metadata': {},
-  //         'name': 'test_20_one@example.com',
-  //         'object': 'card',
-  //         'tokenization_method': null
-  //     },
-  //     'client_ip': '171.4.234.41',
-  //     'created': 1508754952,
-  //     'email': 'test_20_one@example.com',
-  //     'id': 'tok_1BG3HgEPhVx1rk67roclsirn',
-  //     'livemode': false,
-  //     'object': 'token',
-  //     'type': 'card',
-  //     'used': false
-  //   };
-  //   const postData = {
-  //     'token': token,
-  //     'amount': self.amountForCard(),
-  //     'currency': self.model.currency,
-  //     'data': {},
-  //   };
-  //   self.http.post('http://localhost:4567/charge/angular', postData, {
-  //     headers: new HttpHeaders().set('Content-Type', 'application/json'),
-  //     observe: 'response', // TODO How do we catch 4xx errors?
-  //   }).subscribe(
-  //     data => {
-  //       console.log('Posting data from angular');
-  //       // TODO On fail also display 'what we know' about the error.
-  //       console.log(data.status, data.body);
-  //       self.model.phase = 'final';
-  //       if (data.status === 201) {
-  //         self.model.result = 'success';
-  //       } else {
-  //         self.model.result = 'fail';
-  //       }
-  //     },
-  //     error => {
-  //       self.model.phase = 'final';
-  //       self.model.result = 'fail';
-  //       self.model.resultCode = error.status;
-  //
-  //       const errorInfo = JSON.parse(error.error);
-  //       self.model.resultMessage = errorInfo.message;
-  //
-  //       console.log(errorInfo);
-  //     }
-  //   );
-  //   return false;
-  // }
-
   clickRetry() {
     this.model.reset();
   }
 
   clickCard() {
+    if(this.model.paySelection == 4 && this.amountForCard() < 500) {
+      if(Currencies.isZeroDecimalCurrency(this.model.currency))
+        this.errorMessage = 'The minimum donation is '+this.model.currency+' 500';
+      else
+        this.errorMessage = 'The minimum donation is '+this.model.currency+' 5.00';
+      return false;
+    }
+
+    this.errorMessage = '';
+    this.successMessage = '';
+
     this.stripe.open({
       name: 'Keyman',
       description: 'Donation to Keyman',
