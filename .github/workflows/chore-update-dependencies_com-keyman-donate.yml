@@ -6,7 +6,7 @@ name: Azure App Service - com-keyman-donate(Production), Build and deploy NodeJS
 on:
   push:
     branches:
-      - chore/update-dependencies
+      - master
 
 jobs:
   build-and-deploy:
