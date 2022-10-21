@@ -107,7 +107,6 @@
       }
     }
   },
-  "defaultProject": "Keyman",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
