@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WaysToGiveComponent } from './ways-to-give.component';
 
@@ -6,7 +6,7 @@ describe('WaysToGiveComponent', () => {
   let component: WaysToGiveComponent;
   let fixture: ComponentFixture<WaysToGiveComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WaysToGiveComponent ]
     })
