@@ -5,6 +5,8 @@ const app = express();
 const routes = require('./routes/routes');
 // Set routes
 app.use('/', routes);
+
+/*
 // Todo: Error handling
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -19,6 +21,8 @@ app.use((err, req, res, next) => {
       message: err,
     });
 });
+*/
+
 // Listen on port 4567
 app.listen(process.env.PORT || 4567, () => {
   console.log('Running on port 4567');
